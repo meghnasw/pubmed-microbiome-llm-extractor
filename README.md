@@ -139,10 +139,10 @@ This queries PubMed with the default microbiome search query and downloads 20 ab
 ### Step 7 — Run LLM extraction on your fetched abstracts (requires internet)
 
 ```bash
-python extract_parameters.py --in data/my_abstracts.json --out data/my_extracted.json --limit 5
+python extract_parameters.py --HF_TOKEN "{INSERT TOKEN HERE}" --in data/my_abstracts.json --out data/my_extracted.json --limit 3
 ```
 
-This sends the first 5 abstracts to the free HuggingFace Mistral-7B model for structured extraction. **The first call may take 20–30 seconds** while the model loads on HuggingFace's servers — this is normal.
+This sends the first 5 abstracts to the free HuggingFace model for structured extraction.
 
 For this step to run, create a free account at [huggingface.co](https://huggingface.co) and set your token:
 
