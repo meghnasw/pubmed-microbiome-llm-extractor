@@ -27,7 +27,7 @@ import requests
 # ---------------------------------------------------------------------------
 # HuggingFace Inference API config (chat completions endpoint, current as of 2025)
 # ---------------------------------------------------------------------------
-HF_MODEL   = "mistralai/Mistral-7B-Instruct-v0.3"
+HF_MODEL   = "HuggingFaceH4/zephyr-7b-beta"
 HF_API_URL = f"https://router.huggingface.co/hf-inference/models/{HF_MODEL}/v1/chat/completions"
 
 # Set via environment; a free HuggingFace account token gives higher rate limits:
@@ -35,9 +35,12 @@ HF_API_URL = f"https://router.huggingface.co/hf-inference/models/{HF_MODEL}/v1/c
 # Without a token the API still works but is heavily rate-limited.
 HF_TOKEN = os.getenv("HF_TOKEN", "")
 
+if not HF_TOKEN:
+    print("[WARNING] HF_TOKEN not set. LLM extraction will fail — set it with: export HF_TOKEN=hf_...")
+
 HEADERS = {
-    "Authorization": f"Bearer {HF_TOKEN}",
     "Content-Type": "application/json",
+    **({"Authorization": f"Bearer {HF_TOKEN}"} if HF_TOKEN else {}),
 }
 
 
@@ -91,10 +94,9 @@ def call_hf_api(record: Dict, max_retries: int = 3) -> Optional[str]:
     Handles model loading delays (HTTP 503) with exponential back-off.
     """
     payload = {
-        "model": HF_MODEL,
         "messages": build_messages(record),
         "max_tokens": 400,
-        "temperature": 0.1,   # low temp = deterministic structured output
+        "temperature": 0.2,
     }
 
     for attempt in range(1, max_retries + 1):
