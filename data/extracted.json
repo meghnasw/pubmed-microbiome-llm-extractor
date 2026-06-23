@@ -1,5 +1,4 @@
 {
-  "model": "rule_based_fallback",
   "extracted": 15,
   "results": [
     {
@@ -44,7 +43,7 @@
       "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/38203847/",
       "body_site": "saliva",
       "sequencing_method": "16S rRNA amplicon",
-      "sample_size": null,
+      "sample_size": 180,
       "study_design": "cross-sectional",
       "disease_condition": "not_extracted",
       "key_taxa": [],
@@ -95,7 +94,7 @@
       "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/37812345/",
       "body_site": "semen",
       "sequencing_method": "16S rRNA amplicon",
-      "sample_size": null,
+      "sample_size": 78,
       "study_design": "cross-sectional",
       "disease_condition": "not_extracted",
       "key_taxa": [],
@@ -231,7 +230,7 @@
       "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/37998765/",
       "body_site": "gut_feces",
       "sequencing_method": "16S rRNA amplicon",
-      "sample_size": null,
+      "sample_size": 89,
       "study_design": "longitudinal",
       "disease_condition": "not_extracted",
       "key_taxa": [],
@@ -248,7 +247,7 @@
       "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/38110234/",
       "body_site": "urine",
       "sequencing_method": "16S rRNA amplicon",
-      "sample_size": null,
+      "sample_size": 98,
       "study_design": "case-control",
       "disease_condition": "not_extracted",
       "key_taxa": [],

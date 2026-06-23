@@ -15,6 +15,7 @@ import xml.etree.ElementTree as ET
 from typing import Dict, List
 
 import requests
+from typing import Tuple
 
 # ---------------------------------------------------------------------------
 # Default search query — mirrors the systematic-review inclusion criteria
@@ -36,7 +37,7 @@ CONTACT_EMAIL = "meghna.microbiome.extractor@research.org"
 # PubMed search helpers
 # ---------------------------------------------------------------------------
 
-def search_pubmed(query: str, max_results: int = 50) -> tuple[List[str], int]:
+def search_pubmed(query: str, max_results: int = 50) -> Tuple[List[str], int]:
     """
     Run an esearch against PubMed.
 

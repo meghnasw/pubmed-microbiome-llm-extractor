@@ -144,11 +144,26 @@ def parse_json_from_response(raw: str) -> Optional[Dict]:
     return None
 
 
-def extract_parameters_llm(record: Dict) -> Dict:
+def extract_parameters_llm(record: Dict, fallback_only: bool = False) -> Dict:
     """
     Run LLM extraction on a single abstract record.
     Returns extracted parameters merged with source metadata.
+
+    Parameters
+    ----------
+    fallback_only : bool
+        If True, skip the LLM call and use rule-based extraction only.
+        Useful for offline testing and CI validation.
     """
+    if fallback_only:
+        params = rule_based_fallback(record)
+        params["extraction_method"] = "rule_based_fallback"
+        return {
+            "pmid": record.get("pmid"), "title": record.get("title"),
+            "year": record.get("year"), "journal": record.get("journal"),
+            "pubmed_url": record.get("pubmed_url"), **params,
+        }
+
     prompt   = build_prompt(record)
     raw_resp = call_hf_api(prompt)
     params   = parse_json_from_response(raw_resp)
@@ -198,6 +213,7 @@ SAMPLE_SIZE_RE = re.compile(
     r"(?:n\s*=\s*|included?\s+|enrolled?\s+|recruited?\s+|analysed?\s+|total\s+of\s+"
     r"|from\s+|of\s+|comprising\s+|spanning\s+)"
     r"(\d{2,5})\s*"
+    r"(?:\w+\s+)?"   # optional adjective (e.g. "paediatric", "healthy", "hospitalized")
     r"(?:participants?|subjects?|individuals?|samples?|patients?|volunteers?|adults?|"
     r"women|men|infants?|neonates?|cases?|controls?|pregnant|healthy|preterm|HCWs?)",
     re.IGNORECASE,
@@ -252,7 +268,7 @@ def rule_based_fallback(record: Dict) -> Dict:
 # Batch extraction
 # ---------------------------------------------------------------------------
 
-def extract_batch(records: List[Dict], delay: float = 2.0) -> List[Dict]:
+def extract_batch(records: List[Dict], delay: float = 2.0, fallback_only: bool = False) -> List[Dict]:
     """
     Extract parameters from a list of abstract records.
 
@@ -265,10 +281,10 @@ def extract_batch(records: List[Dict], delay: float = 2.0) -> List[Dict]:
         pmid = record.get("pmid", "?")
         print(f"[{i}/{total}] Extracting PMID {pmid}...")
 
-        extracted = extract_parameters_llm(record)
+        extracted = extract_parameters_llm(record, fallback_only=fallback_only)
         results.append(extracted)
 
-        if i < total:
+        if i < total and not fallback_only:
             time.sleep(delay)
 
     return results
@@ -290,6 +306,8 @@ def main():
                         help="Seconds between API calls (default: 2)")
     parser.add_argument("--limit", type=int, default=None,
                         help="Process only the first N abstracts (for testing)")
+    parser.add_argument("--fallback-only", action="store_true",
+                        help="Skip LLM call; use rule-based extraction only (offline/CI mode)")
     args = parser.parse_args()
 
     with open(args.input, encoding="utf-8") as f:
@@ -301,7 +319,7 @@ def main():
         print(f"[Extract] Processing first {len(records)} abstracts (--limit applied).")
 
     print(f"[Extract] Starting extraction of {len(records)} abstracts using {HF_MODEL}...")
-    results = extract_batch(records, delay=args.delay)
+    results = extract_batch(records, delay=args.delay, fallback_only=args.fallback_only)
 
     output = {
         "model":     HF_MODEL,

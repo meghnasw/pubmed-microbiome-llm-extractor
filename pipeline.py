@@ -21,7 +21,7 @@ import time
 from pathlib import Path
 
 from fetch_pubmed import DEFAULT_QUERY, fetch_abstracts, search_pubmed
-from extract_parameters import extract_batch
+from extract_parameters import extract_batch, HF_MODEL
 
 
 # ---------------------------------------------------------------------------
@@ -81,6 +81,7 @@ def run_pipeline(
     max_results: int,
     delay: float,
     skip_fetch: bool,
+    fallback_only: bool,
     abstracts_path: str,
     extracted_path: str,
     csv_path: str,
@@ -110,8 +111,9 @@ def run_pipeline(
         print(f"[Pipeline] Abstracts saved → {abstracts_path}")
 
     # ── Step 2: LLM extraction ───────────────────────────────────────────
-    print(f"\n[Pipeline] Step 2/2 — Extracting parameters from {len(records)} abstracts...")
-    results = extract_batch(records, delay=delay)
+    mode_label = "rule-based fallback only" if fallback_only else f"LLM ({HF_MODEL})"
+    print(f"\n[Pipeline] Step 2/2 — Extracting parameters from {len(records)} abstracts [{mode_label}]...")
+    results = extract_batch(records, delay=delay, fallback_only=fallback_only)
 
     # Save JSON
     with open(extracted_path, "w", encoding="utf-8") as f:
@@ -142,6 +144,8 @@ def main():
                         help="Max abstracts to fetch (default: 50)")
     parser.add_argument("--delay",       type=float, default=2.0,
                         help="Seconds between HuggingFace API calls (default: 2)")
+    parser.add_argument("--fallback-only", action="store_true",
+                        help="Skip LLM; use rule-based extraction only (offline/CI mode)")
     parser.add_argument("--skip-fetch",  action="store_true",
                         help="Re-use existing data/abstracts.json (skip PubMed fetch)")
     parser.add_argument("--abstracts",   default="data/abstracts.json")
@@ -154,6 +158,7 @@ def main():
         max_results    = args.max,
         delay          = args.delay,
         skip_fetch     = args.skip_fetch,
+        fallback_only  = args.fallback_only,
         abstracts_path = args.abstracts,
         extracted_path = args.extracted,
         csv_path       = args.csv,
