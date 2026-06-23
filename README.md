@@ -76,7 +76,7 @@ This creates a folder called `pubmed-microbiome-llm-extractor` wherever your Ter
 
 ---
 
-### Step 3 — Go into the folder
+### Step 3 - Go into the folder
 
 ```bash
 cd pubmed-microbiome-llm-extractor
@@ -84,7 +84,7 @@ cd pubmed-microbiome-llm-extractor
 
 ---
 
-### Step 4 — Install the required Python package
+### Step 4 - Install the required Python package
 
 ```bash
 pip install -r requirements.txt
@@ -94,7 +94,7 @@ This installs `requests`, the only external library the pipeline needs. You only
 
 ---
 
-### Step 5 — Run a quick offline test (no internet required)
+### Step 5 - Run a quick offline test (no internet required)
 
 This uses the sample abstracts already included in the `data/` folder:
 
@@ -126,7 +126,7 @@ Two output files are created in the `data/` folder:
 
 ---
 
-### Step 6 — Fetch real abstracts from PubMed (requires internet)
+### Step 6 - Fetch real abstracts from PubMed (requires internet)
 
 ```bash
 python fetch_pubmed.py --max 20 --out data/my_abstracts.json
@@ -136,7 +136,7 @@ This queries PubMed with the default microbiome search query and downloads 20 ab
 
 ---
 
-### Step 7 — Run LLM extraction on your fetched abstracts (requires internet)
+### Step 7 - Run LLM extraction on your fetched abstracts (requires internet)
 
 ```bash
 python extract_parameters.py --HF_TOKEN "{INSERT TOKEN HERE}" --in data/my_abstracts.json --out data/my_extracted.json --limit 3
@@ -152,7 +152,7 @@ export HF_TOKEN=hf_your_token_here
 
 ---
 
-### Step 8 — Run the full pipeline end-to-end
+### Step 8 - Run the full pipeline end-to-end
 
 ```bash
 python pipeline.py --max 50
