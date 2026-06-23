@@ -1,14 +1,15 @@
 """
 extract_parameters.py
 ---------------------
-Uses a free HuggingFace Inference API model to extract structured parameters
-from PubMed abstracts describing human microbiome sequencing studies.
+Uses the HuggingFace Inference Providers chat-completions API to extract
+structured parameters from PubMed abstracts describing human microbiome
+sequencing studies.
 
 The extraction schema mirrors health economic model parameterisation:
   body_site | sequencing_method | sample_size | study_design |
   disease_condition | key_taxa | geographic_region | main_finding
 
-Optionally set HF_TOKEN env variable for higher rate limits:
+Requires the HF_TOKEN environment variable to be set:
     export HF_TOKEN=hf_your_token_here
 
 Usage (standalone):
@@ -25,27 +26,29 @@ from typing import Dict, List, Optional
 import requests
 
 # ---------------------------------------------------------------------------
-# HuggingFace Inference API config (chat completions endpoint, current as of 2025)
+# HuggingFace Inference Providers config (OpenAI-compatible chat completions)
 # ---------------------------------------------------------------------------
-HF_MODEL   = "HuggingFaceH4/zephyr-7b-beta"
-HF_API_URL = f"https://router.huggingface.co/hf-inference/models/{HF_MODEL}/v1/chat/completions"
+HF_MODEL   = "Qwen/Qwen2.5-7B-Instruct"
+HF_API_URL = "https://router.huggingface.co/v1/chat/completions"
 
-# Set via environment; a free HuggingFace account token gives higher rate limits:
-#   export HF_TOKEN=hf_your_token_here
-# Without a token the API still works but is heavily rate-limited.
+# Token must be supplied via environment variable — never hardcode a token here.
 HF_TOKEN = os.getenv("HF_TOKEN", "")
-
 if not HF_TOKEN:
-    print("[WARNING] HF_TOKEN not set. LLM extraction will fail — set it with: export HF_TOKEN=hf_...")
+    raise RuntimeError(
+        "HF_TOKEN environment variable is not set. "
+        "Create a free token at https://huggingface.co/settings/tokens "
+        "(read/fine-grained with 'Make calls to Inference Providers' permission) "
+        "and run: export HF_TOKEN=hf_your_token_here"
+    )
 
 HEADERS = {
+    "Authorization": f"Bearer {HF_TOKEN}",
     "Content-Type": "application/json",
-    **({"Authorization": f"Bearer {HF_TOKEN}"} if HF_TOKEN else {}),
 }
 
 
 # ---------------------------------------------------------------------------
-# Prompt template  (system + user message format for chat completions API)
+# Prompt template (system + user message format for chat completions API)
 # ---------------------------------------------------------------------------
 SYSTEM_PROMPT = (
     "You are a biomedical data extraction assistant specialised in microbiome research. "
@@ -90,13 +93,14 @@ def build_messages(record: Dict) -> List[Dict]:
 
 def call_hf_api(record: Dict, max_retries: int = 3) -> Optional[str]:
     """
-    Call the HuggingFace chat completions endpoint.
+    Call the HuggingFace Inference Providers chat completions endpoint.
     Handles model loading delays (HTTP 503) with exponential back-off.
     """
     payload = {
+        "model": HF_MODEL,
         "messages": build_messages(record),
         "max_tokens": 400,
-        "temperature": 0.2,
+        "temperature": 0.1,   # low temp = deterministic structured output
     }
 
     for attempt in range(1, max_retries + 1):
@@ -111,7 +115,6 @@ def call_hf_api(record: Dict, max_retries: int = 3) -> Optional[str]:
 
             resp.raise_for_status()
             data = resp.json()
-            # Chat completions response: data["choices"][0]["message"]["content"]
             return data["choices"][0]["message"]["content"]
 
         except (requests.RequestException, KeyError, IndexError) as e:
