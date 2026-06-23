@@ -144,7 +144,7 @@ python extract_parameters.py --in data/my_abstracts.json --out data/my_extracted
 
 This sends the first 5 abstracts to the free HuggingFace Mistral-7B model for structured extraction. **The first call may take 20–30 seconds** while the model loads on HuggingFace's servers — this is normal.
 
-For higher rate limits, optionally create a free account at [huggingface.co](https://huggingface.co) and set your token:
+For this step to run, create a free account at [huggingface.co](https://huggingface.co) and set your token:
 
 ```bash
 export HF_TOKEN=hf_your_token_here
@@ -183,28 +183,7 @@ From `data/extracted.csv` (15 abstracts, rule-based extraction):
 | 38056789 | urine | 225 | cross-sectional | not_extracted | 16S rRNA amplicon |
 | 37812345 | semen | 156 | cross-sectional | not_extracted | 16S rRNA amplicon |
 
-> **Note:** `disease_condition` and `main_finding` fields are populated by the LLM backend (HuggingFace). The rule-based fallback extracts body site, sample size, sequencing method, and study design from text patterns. Run with the HuggingFace API for full extraction.
-
----
-
-## Architecture
-
-### `fetch_pubmed.py`
-- Queries NCBI E-utilities `esearch` + `efetch` endpoints
-- Handles multi-section abstracts (BACKGROUND / METHODS / RESULTS / CONCLUSIONS)
-- Rate-limit compliant (NCBI tool + email registration)
-
-### `extract_parameters.py`
-- Calls **HuggingFace Inference API** (`mistralai/Mistral-7B-Instruct-v0.3`)
-- Structured JSON prompt with schema enforcement
-- Handles 503 model-loading delays with exponential back-off
-- **Rule-based fallback** (regex + keyword matching) ensures the pipeline always produces output even without API access — useful for CI/CD validation
-
-### `pipeline.py`
-- Orchestrates both steps end-to-end
-- Exports JSON + flat CSV
-- Prints a body-site frequency summary on completion
-
+> **Note:** `disease_condition` and `main_finding` fields are populated by the LLM backend (HuggingFace). The rule-based fallback extracts body site, sample size, sequencing method, and study design from text patterns.
 ---
 
 ## Extending the pipeline
