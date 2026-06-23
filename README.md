@@ -52,7 +52,7 @@ This query retrieves **~18,700 PubMed articles** (as of June 2026). The pipeline
 
 ## How to run this (step-by-step for beginners)
 
-### Step 1 — Make sure you have Python installed
+### Step 1 - Make sure you have Python installed
 
 Open your **Terminal** (Mac: press `Cmd + Space`, type "Terminal", press Enter) and type:
 
@@ -64,7 +64,7 @@ You should see something like `Python 3.8.x` or higher. If you get an error, dow
 
 ---
 
-### Step 2 — Download this repository
+### Step 2 - Download this repository
 
 In your Terminal, run:
 
