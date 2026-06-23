@@ -1,0 +1,127 @@
+{
+  "query": "microbiome AND (saliva OR semen OR skin OR vaginal OR vagina OR urine OR feces OR stool) AND human AND sequencing AND (amplicon OR 16S)",
+  "total_pubmed_results": 18742,
+  "fetched": 15,
+  "articles": [
+    {
+      "pmid": "38124501",
+      "title": "Vaginal microbiome composition in reproductive-age women: a cross-sectional 16S rRNA amplicon study",
+      "year": "2024",
+      "journal": "Microbiome",
+      "abstract": "BACKGROUND: The vaginal microbiome plays a critical role in reproductive and sexual health. METHODS: We performed 16S rRNA V3-V4 amplicon sequencing on vaginal swabs from 312 healthy reproductive-age women recruited in three European cities. Community state types (CSTs) were characterised using unsupervised clustering. RESULTS: Lactobacillus crispatus-dominated CST I was identified in 41.3% of participants. Lactobacillus iners-dominated CST III was found in 27.9%. High-diversity CST IV, characterised by Gardnerella vaginalis and Prevotella species, was associated with bacterial vaginosis symptoms in 89% of affected participants. Ethnicity, hormonal contraceptive use, and number of sexual partners were significant predictors of CST membership. CONCLUSIONS: This large European cohort characterises vaginal CST diversity and identifies modifiable determinants of microbiome composition relevant to reproductive health interventions.",
+      "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/38124501/"
+    },
+    {
+      "pmid": "37891234",
+      "title": "Gut microbiome dysbiosis in colorectal cancer: a 16S rRNA meta-analysis of 1,247 patients and controls",
+      "year": "2023",
+      "journal": "Gut",
+      "abstract": "OBJECTIVE: To characterise consistent gut microbiome signatures of colorectal cancer (CRC) across independent cohorts. DESIGN: We conducted a meta-analysis of 16S rRNA amplicon sequencing data from 18 case-control studies comprising 1,247 individuals (623 CRC, 624 controls) from 9 countries. Raw FASTQ files were reprocessed using a unified DADA2 pipeline. RESULTS: Fusobacterium nucleatum, Peptostreptococcus anaerobius, and Bacteroides fragilis were consistently enriched in CRC stool samples (all FDR < 0.01). Alpha diversity (Shannon index) was significantly reduced in CRC cases (p < 0.0001). A Random Forest classifier trained on 30 taxa achieved AUC 0.82 for CRC detection. CONCLUSIONS: Cross-cohort microbiome signatures exist for CRC and may inform non-invasive screening strategies using stool-based microbiome profiling.",
+      "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/37891234/"
+    },
+    {
+      "pmid": "38203847",
+      "title": "Salivary microbiome in periodontitis: 16S amplicon sequencing of 180 periodontitis patients and matched controls",
+      "year": "2024",
+      "journal": "Journal of Dental Research",
+      "abstract": "We investigated the salivary and subgingival microbiome in 180 patients with severe periodontitis and 180 age- and sex-matched periodontally healthy controls using 16S rRNA V4 amplicon sequencing. Patients were recruited at the University of Geneva Dental School. Samples were collected before treatment. Prevotella intermedia, Treponema denticola, and Tannerella forsythia (the red complex) were significantly elevated in periodontitis saliva (log2FC > 2.5, all p < 0.001 after Benjamini-Hochberg correction). A diagnostic model built with Elastic Net regularised regression (5-fold CV) achieved sensitivity 0.78 and specificity 0.81 for periodontitis classification using salivary microbiome features alone. These data suggest saliva is a viable non-invasive sample for periodontal disease monitoring.",
+      "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/38203847/"
+    },
+    {
+      "pmid": "37654321",
+      "title": "Skin microbiome diversity in atopic dermatitis: longitudinal 16S rRNA profiling during flare and remission",
+      "year": "2023",
+      "journal": "Journal of Allergy and Clinical Immunology",
+      "abstract": "BACKGROUND: Atopic dermatitis (AD) is characterised by skin microbiome dysbiosis, yet longitudinal dynamics during flares remain poorly understood. METHODS: 16S rRNA V1-V2 amplicon sequencing was applied to skin swabs from 94 paediatric AD patients (mean age 6.2 years) collected at flare onset and 8-week remission, alongside 47 healthy controls. Sampling sites included antecubital fossa, popliteal fossa, and volar forearm. RESULTS: Staphylococcus aureus abundance increased 4.7-fold during flares (p < 0.001) and correlated positively with SCORAD severity (r = 0.61). Cutibacterium acnes and Staphylococcus epidermidis were depleted during flares. Microbial diversity (Shannon index) recovered significantly at remission (p = 0.003) but did not return to healthy control levels. CONCLUSIONS: These longitudinal data demonstrate that flare-associated dysbiosis is partially reversible and identify S. aureus abundance as a potential disease activity biomarker.",
+      "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/37654321/"
+    },
+    {
+      "pmid": "38056789",
+      "title": "Urinary microbiome characterisation by 16S rRNA sequencing: associations with recurrent urinary tract infections in women",
+      "year": "2024",
+      "journal": "European Urology",
+      "abstract": "We characterised the urinary microbiome of 225 women with recurrent urinary tract infections (rUTI; ≥3 episodes/year) and 110 UTI-free controls using 16S rRNA V4 amplicon sequencing of catheter-derived urine specimens. Women were recruited from urology clinics in five German hospitals between 2020 and 2023. rUTI patients showed reduced Lactobacillus abundance (median 2.1% vs 34.7% in controls, p < 0.001) and increased Escherichia/Shigella, Klebsiella, and Enterococcus. A multi-variable logistic regression model using microbiome predictors (AUC 0.79, 95% CI 0.73-0.85) outperformed clinical predictors alone (AUC 0.61). These findings support the urinary microbiome as a target for rUTI prevention strategies, potentially through Lactobacillus restoration.",
+      "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/38056789/"
+    },
+    {
+      "pmid": "37812345",
+      "title": "Seminal microbiome and male fertility: 16S amplicon sequencing in 156 infertile and fertile men",
+      "year": "2023",
+      "journal": "Human Reproduction",
+      "abstract": "The seminal microbiome may influence sperm quality and male fertility, yet its composition and functional relevance remain unclear. We performed 16S rRNA V3-V4 amplicon sequencing on semen samples from 78 infertile men (oligospermia or asthenospermia) and 78 fertile controls from a fertility clinic in Barcelona, Spain. Infertile men had higher relative abundance of Prevotella (14.2% vs 4.1%, p = 0.002) and Anaerococcus (8.9% vs 1.3%, p < 0.001). Lactobacillus was more abundant in fertile controls (22.3% vs 6.7%, p < 0.001). Sperm motility correlated negatively with Prevotella abundance (r = -0.44, p < 0.001) and positively with Lactobacillus abundance (r = 0.38, p < 0.001). These data suggest the seminal microbiome is a modifiable factor in male fertility and warrants investigation as a therapeutic target.",
+      "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/37812345/"
+    },
+    {
+      "pmid": "38178901",
+      "title": "Gut microbiome maturation in preterm infants: prospective 16S rRNA cohort study",
+      "year": "2024",
+      "journal": "Nature Medicine",
+      "abstract": "BACKGROUND: Preterm birth disrupts normal gut microbiome colonisation, with potential long-term health consequences. METHODS: We conducted a prospective longitudinal study of 203 preterm infants (gestational age <32 weeks) and 102 full-term controls, collecting weekly stool samples for 16S rRNA V4 amplicon sequencing during NICU admission and at 6 months corrected age. RESULTS: Preterm infants showed delayed Bifidobacterium colonisation (week 4: 8.3% vs 41.2% in term infants, p < 0.0001) and prolonged dominance of Enterobacteriaceae (Klebsiella, Enterobacter). Antibiotic exposure (>7 days) further delayed microbiome maturation (Shannon index deficit: -0.83, 95% CI -1.12 to -0.54). Late-onset sepsis was preceded by Enterococcus bloom (>30% relative abundance) in 17/22 cases. CONCLUSIONS: Microbiome maturation trajectory in preterm infants is a potential early biomarker of sepsis risk and long-term dysbiosis.",
+      "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/38178901/"
+    },
+    {
+      "pmid": "37923456",
+      "title": "16S rRNA profiling of the skin microbiome in psoriasis: a multicentre European case-control study",
+      "year": "2023",
+      "journal": "British Journal of Dermatology",
+      "abstract": "We characterised the skin microbiome in psoriasis vulgaris using 16S rRNA V3-V4 amplicon sequencing of lesional and non-lesional skin swabs from 148 patients and 148 matched controls across five European dermatology centres (Germany, Italy, France, Netherlands, Sweden). Corynebacterium and Staphylococcus were enriched on lesional skin (fold-change 3.2 and 2.8, respectively; both p < 0.001). Cutibacterium and Malassezia were depleted on lesional versus non-lesional skin. PSORI-Q symptom severity correlated with Staphylococcus abundance (Spearman rho = 0.52). Microbiome composition differed significantly by disease duration, body region, and prior biologic therapy. These findings implicate the skin microbiome in psoriasis pathogenesis and identify potential biomarkers of treatment response.",
+      "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/37923456/"
+    },
+    {
+      "pmid": "38091234",
+      "title": "Diet-induced shifts in the human gut microbiome: a randomised controlled trial of Mediterranean diet versus Western diet",
+      "year": "2024",
+      "journal": "Cell Host & Microbe",
+      "abstract": "BACKGROUND: Diet is a major determinant of gut microbiome composition. METHODS: We randomised 180 adults (90 per arm) to a Mediterranean diet (MedDiet) or an isocaloric Western diet (WestDiet) for 12 weeks. Stool samples were collected at baseline, week 6, and week 12. 16S rRNA V4 amplicon sequencing was performed using the Illumina MiSeq platform. RESULTS: MedDiet increased Faecalibacterium prausnitzii (p < 0.001) and Akkermansia muciniphila (p = 0.004) and decreased Bacteroides dorei (p = 0.012). Short-chain fatty acid concentrations (butyrate, propionate) were significantly higher in MedDiet participants at week 12 (p < 0.001). Alpha diversity increased in MedDiet and decreased in WestDiet (p = 0.001 for interaction). Effect sizes were consistent across sex and BMI strata. CONCLUSIONS: A Mediterranean diet induces rapid, reproducible, and health-associated shifts in gut microbiome composition in healthy adults.",
+      "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/38091234/"
+    },
+    {
+      "pmid": "37745678",
+      "title": "Oral microbiome in head and neck squamous cell carcinoma: salivary 16S amplicon sequencing of 97 patients",
+      "year": "2023",
+      "journal": "Oral Oncology",
+      "abstract": "We performed 16S rRNA V4 amplicon sequencing on saliva from 97 head and neck squamous cell carcinoma (HNSCC) patients before treatment and 97 cancer-free controls matched on age, sex, and HPV status. Samples were collected at the University Medical Centre Groningen. Fusobacterium nucleatum, Peptostreptococcus stomatis, and Treponema vincentii were significantly enriched in HNSCC saliva (all LDA score > 3.0; p < 0.001). A LASSO-based diagnostic model using salivary microbiome features achieved AUC 0.84 (95% CI 0.78-0.90). After adjustment for HPV status and smoking, the microbiome model retained significance. These findings suggest salivary microbiome profiling may augment early detection of HNSCC.",
+      "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/37745678/"
+    },
+    {
+      "pmid": "38142356",
+      "title": "Gut microbiome composition during pregnancy and risk of gestational diabetes mellitus: a prospective cohort of 614 women",
+      "year": "2024",
+      "journal": "Diabetes Care",
+      "abstract": "OBJECTIVE: To evaluate whether first-trimester gut microbiome composition predicts gestational diabetes mellitus (GDM) risk. RESEARCH DESIGN AND METHODS: In a prospective cohort of 614 pregnant women (101 developed GDM), stool samples were collected at 10-14 weeks gestation and 16S rRNA V4 amplicon sequencing was performed. Predictive modelling used Random Forest with nested cross-validation. RESULTS: First-trimester Prevotella copri abundance was positively associated with GDM (OR 1.8, 95% CI 1.3-2.5 per IQR increase; p < 0.001). Blautia and Bifidobacterium were inversely associated with GDM risk. A microbiome-based predictive model achieved AUC 0.73 (95% CI 0.66-0.80) for GDM prediction, improving to AUC 0.81 when combined with clinical risk factors. CONCLUSIONS: The first-trimester gut microbiome is an independent predictor of GDM and may enable earlier risk stratification.",
+      "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/38142356/"
+    },
+    {
+      "pmid": "37832109",
+      "title": "Vaginal Lactobacillus species and risk of preterm birth: a nested case-control study within a UK birth cohort",
+      "year": "2023",
+      "journal": "BJOG: An International Journal of Obstetrics and Gynaecology",
+      "abstract": "We investigated the association between vaginal microbiome composition at 16 weeks gestation and subsequent preterm birth (<37 weeks) in a nested case-control study within the ALSPAC birth cohort (Bristol, UK). Cases (n=114 preterm births) were matched 1:2 to term controls (n=228). Cervicovaginal swabs were profiled by 16S rRNA V4 amplicon sequencing. Low Lactobacillus abundance (<50% relative abundance) at 16 weeks was associated with a 2.9-fold increased risk of preterm birth (OR 2.9, 95% CI 1.7-5.0). Specifically, L. crispatus dominance was protective (OR 0.4, 95% CI 0.2-0.8), whereas CST IV (Gardnerella/Prevotella) was associated with increased risk (OR 3.5, 95% CI 1.9-6.4). These data support targeted vaginal microbiome screening in early pregnancy for preterm birth risk stratification.",
+      "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/37832109/"
+    },
+    {
+      "pmid": "38067234",
+      "title": "Skin microbiome of healthcare workers: impact of handwashing frequency on Staphylococcus aureus colonisation",
+      "year": "2024",
+      "journal": "Infection Control & Hospital Epidemiology",
+      "abstract": "Healthcare workers (HCWs) may serve as vectors for nosocomial Staphylococcus aureus transmission. We characterised the hand skin microbiome of 136 HCWs using 16S rRNA V1-V2 amplicon sequencing. HCWs were categorised by handwashing frequency: low (<10/shift), medium (10-20/shift), high (>20/shift). S. aureus (including MRSA) was detected by culture and amplicon sequencing. S. aureus colonisation was more prevalent in low-frequency washers (34%) than high-frequency washers (11%; p = 0.002). However, high-frequency handwashing reduced microbiome diversity (Shannon index: -0.62, p < 0.001) and depleted commensal Staphylococcus epidermidis, which competitively inhibits S. aureus. Optimal S. aureus suppression with minimal disruption to protective commensals was associated with medium handwashing frequency.",
+      "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/38067234/"
+    },
+    {
+      "pmid": "37998765",
+      "title": "Antibiotic perturbation of the gut microbiome in community-acquired pneumonia: a prospective observational study",
+      "year": "2023",
+      "journal": "Clinical Infectious Diseases",
+      "abstract": "We prospectively characterised gut microbiome dynamics before, during, and after antibiotic treatment for community-acquired pneumonia (CAP) using 16S rRNA V4 amplicon sequencing of serial stool samples from 89 hospitalised patients (mean age 67 years) and 45 healthy controls. Antibiotic treatment (predominantly amoxicillin-clavulanate or ceftriaxone, 5-7 days) caused significant alpha diversity reduction at day 5 (Shannon index: -1.23 vs baseline, p < 0.0001), with depletion of Lachnospiraceae and Ruminococcaceae and bloom of Enterobacteriaceae. At 30-day follow-up, only 58% of patients had returned to baseline diversity. Clostridium difficile colonisation occurred in 9/89 patients during antibiotic treatment. Baseline microbiome diversity was the strongest predictor of post-antibiotic recovery (rho = 0.61, p < 0.001). These data highlight antibiotic-induced microbiome disruption as a clinically relevant outcome in CAP management.",
+      "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/37998765/"
+    },
+    {
+      "pmid": "38110234",
+      "title": "Urinary microbiome in bladder cancer: 16S rRNA sequencing reveals Fusobacterium enrichment in tumour patients",
+      "year": "2024",
+      "journal": "European Urology Oncology",
+      "abstract": "BACKGROUND: The urinary microbiome is increasingly recognised as potentially relevant to bladder cancer (BC) pathogenesis. METHODS: We performed 16S rRNA V3-V4 amplicon sequencing on catheter-voided urine from 98 BC patients (stages Ta-T3) and 98 cystoscopy-negative controls in a case-control study at three Swiss urology centres. RESULTS: Fusobacterium nucleatum was detected in 31% of BC urine samples versus 4% of controls (OR 10.3, 95% CI 3.8-28.2). Streptococcus anginosus and Prevotella bivia were also enriched in BC urine. A microbiome score combining these three taxa achieved AUC 0.78 for BC detection, comparable to urine cytology (AUC 0.74) in this cohort. Fusobacterium enrichment was most pronounced in high-grade tumours. CONCLUSIONS: The urinary microbiome may serve as a non-invasive biomarker for bladder cancer detection and warrants prospective validation.",
+      "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/38110234/"
+    }
+  ]
+}
