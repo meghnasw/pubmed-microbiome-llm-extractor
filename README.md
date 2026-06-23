@@ -4,7 +4,6 @@
 
 Automatically searches PubMed for human microbiome sequencing studies, then uses a large language model (LLM) to extract structured parameters from each abstract — body site, study design, sample size, key taxa, and more.
 
-This mirrors the core challenge in **health economic modeling pipelines**: systematically extracting structured model parameters (states, transitions, costs, utilities) from heterogeneous scientific literature at scale.
 
 ---
 
@@ -229,41 +228,8 @@ response = client.chat.completions.create(
 return response.choices[0].message.content
 ```
 
-### Adapt for health economic model extraction
-
-Change the extraction schema in `EXTRACTION_TEMPLATE` to target health economic parameters:
-
-```
-- "model_type": (Markov | decision tree | microsimulation | dynamic transmission | other)
-- "health_states": list of model health states
-- "transition_parameters": key transition probabilities with source
-- "cost_parameters": costs with perspective (payer | societal) and currency
-- "utility_values": EQ-5D / SF-6D / other utility weights
-- "time_horizon": model time horizon
-- "discount_rate": applied discount rate
-```
-
-This is the direct extension of this pipeline toward infectious disease health economic modeling.
-
----
-
-## Requirements
-
-- Python 3.9+
-- `requests` (see `requirements.txt`)
-- Internet access (PubMed E-utilities + HuggingFace Inference API)
-- HF_TOKEN env variable (optional; increases HuggingFace rate limits)
-
 ---
 
 ## Author
 
-**Dr. Meghna Swayambhu**  
-Computational Scientist · AI/ML Pipelines · Infectious Disease Data Science  
-[LinkedIn](#) · [GitHub](#)
-
----
-
-## Related work
-
-This pipeline is part of a broader research focus on applying LLM-based information extraction to systematic review automation in biomedical and health economic modeling contexts.
+**Dr. Meghna Swayambhu** 
