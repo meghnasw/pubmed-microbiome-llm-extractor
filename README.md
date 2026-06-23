@@ -51,46 +51,119 @@ This query retrieves **~18,700 PubMed articles** (as of June 2026). The pipeline
 
 ---
 
-## Quick start
+## How to run this (step-by-step for beginners)
 
-### 1. Install dependencies
+### Step 1 — Make sure you have Python installed
+
+Open your **Terminal** (Mac: press `Cmd + Space`, type "Terminal", press Enter) and type:
+
+```bash
+python --version
+```
+
+You should see something like `Python 3.8.x` or higher. If you get an error, download Python from [python.org](https://www.python.org/downloads/).
+
+---
+
+### Step 2 — Download this repository
+
+In your Terminal, run:
+
+```bash
+git clone https://github.com/meghnasw/pubmed-microbiome-llm-extractor.git
+```
+
+This creates a folder called `pubmed-microbiome-llm-extractor` wherever your Terminal is currently pointing. To see where that is, type `pwd`.
+
+---
+
+### Step 3 — Go into the folder
+
+```bash
+cd pubmed-microbiome-llm-extractor
+```
+
+---
+
+### Step 4 — Install the required Python package
 
 ```bash
 pip install -r requirements.txt
 ```
 
-No API key required. For higher HuggingFace rate limits, optionally set:
+This installs `requests`, the only external library the pipeline needs. You only need to do this once.
+
+---
+
+### Step 5 — Run a quick offline test (no internet required)
+
+This uses the sample abstracts already included in the `data/` folder:
+
+```bash
+python pipeline.py --skip-fetch --fallback-only
+```
+
+You should see output like this:
+
+```
+[Pipeline] Skipping fetch — loading existing data/abstracts.json
+[Pipeline] Step 2/2 — Extracting parameters from 15 abstracts [rule-based fallback only]...
+[1/15] Extracting PMID 38124501...
+...
+============================================================
+EXTRACTION SUMMARY
+  Total records       : 15
+  Body-site breakdown:
+    gut_feces            █████ (5)
+    skin                 ███ (3)
+    vaginal              ██ (2)
+    ...
+============================================================
+```
+
+Two output files are created in the `data/` folder:
+- `data/extracted.json` — full structured results
+- `data/extracted.csv` — flat table, openable in Excel
+
+---
+
+### Step 6 — Fetch real abstracts from PubMed (requires internet)
+
+```bash
+python fetch_pubmed.py --max 20 --out data/my_abstracts.json
+```
+
+This queries PubMed with the default microbiome search query and downloads 20 abstracts. You'll see: `Found 18,742 results, fetching 20.`
+
+---
+
+### Step 7 — Run LLM extraction on your fetched abstracts (requires internet)
+
+```bash
+python extract_parameters.py --in data/my_abstracts.json --out data/my_extracted.json --limit 5
+```
+
+This sends the first 5 abstracts to the free HuggingFace Mistral-7B model for structured extraction. **The first call may take 20–30 seconds** while the model loads on HuggingFace's servers — this is normal.
+
+For higher rate limits, optionally create a free account at [huggingface.co](https://huggingface.co) and set your token:
 
 ```bash
 export HF_TOKEN=hf_your_token_here
 ```
 
-### 2. Run the full pipeline
+---
+
+### Step 8 — Run the full pipeline end-to-end
 
 ```bash
-# Fetch 50 abstracts and extract parameters
 python pipeline.py --max 50
-
-# Outputs:
-#   data/abstracts.json    — raw PubMed abstracts
-#   data/extracted.json    — structured extraction results
-#   data/extracted.csv     — flat CSV for downstream analysis
 ```
 
-### 3. Run steps individually
+This fetches 50 abstracts from PubMed and runs LLM extraction on all of them. Results are saved to `data/abstracts.json`, `data/extracted.json`, and `data/extracted.csv`.
 
-```bash
-# Step 1: fetch abstracts only
-python fetch_pubmed.py --max 100 --out data/abstracts.json
+---
 
-# Step 2: extract from existing abstracts (skip re-fetching)
-python extract_parameters.py --in data/abstracts.json --out data/extracted.json
-
-# Step 2 alt: use pipeline with --skip-fetch
-python pipeline.py --skip-fetch
-```
-
-### 4. Custom query
+### Custom search query
 
 ```bash
 python pipeline.py --query "gut microbiome AND (RSV OR influenza OR COVID) AND vaccine" --max 30
