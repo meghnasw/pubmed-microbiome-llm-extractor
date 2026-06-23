@@ -25,19 +25,24 @@ from typing import Dict, List, Optional
 import requests
 
 # ---------------------------------------------------------------------------
-# HuggingFace Inference API config
+# HuggingFace Inference API config (chat completions endpoint, current as of 2025)
 # ---------------------------------------------------------------------------
 HF_MODEL   = "mistralai/Mistral-7B-Instruct-v0.3"
-HF_API_URL = f"https://api-inference.huggingface.co/models/{HF_MODEL}"
+HF_API_URL = f"https://api-inference.huggingface.co/models/{HF_MODEL}/v1/chat/completions"
 
-# Set via environment; works without a token (free tier, rate-limited)
-HF_TOKEN   = os.getenv("HF_TOKEN", "")
+# Set via environment; a free HuggingFace account token gives higher rate limits:
+#   export HF_TOKEN=hf_your_token_here
+# Without a token the API still works but is heavily rate-limited.
+HF_TOKEN = os.getenv("HF_TOKEN", "")
 
-HEADERS = {"Authorization": f"Bearer {HF_TOKEN}"} if HF_TOKEN else {}
+HEADERS = {
+    "Authorization": f"Bearer {HF_TOKEN}",
+    "Content-Type": "application/json",
+}
 
 
 # ---------------------------------------------------------------------------
-# Prompt template
+# Prompt template  (system + user message format for chat completions API)
 # ---------------------------------------------------------------------------
 SYSTEM_PROMPT = (
     "You are a biomedical data extraction assistant specialised in microbiome research. "
@@ -45,9 +50,7 @@ SYSTEM_PROMPT = (
     "Always return valid JSON only — no prose, no markdown, no explanation."
 )
 
-EXTRACTION_TEMPLATE = """<s>[INST] {system}
-
-Extract the following fields from this PubMed abstract and return ONLY a JSON object:
+USER_TEMPLATE = """Extract the following fields from this PubMed abstract and return ONLY a JSON object:
 
 - "body_site": primary sample site (choose from: saliva, skin, vaginal, gut_feces, urine, semen, respiratory, multiple, unknown)
 - "sequencing_method": (e.g. "16S rRNA V4 amplicon", "ITS2 amplicon", "WGS", "other")
@@ -64,33 +67,34 @@ Abstract title: {title}
 Abstract text:
 {abstract}
 
-Return ONLY the JSON object. [/INST]"""
+Return ONLY the JSON object."""
 
 
 # ---------------------------------------------------------------------------
 # LLM extraction
 # ---------------------------------------------------------------------------
 
-def build_prompt(record: Dict) -> str:
-    return EXTRACTION_TEMPLATE.format(
-        system=SYSTEM_PROMPT,
-        title=record.get("title", ""),
-        abstract=record.get("abstract", ""),
-    )
+def build_messages(record: Dict) -> List[Dict]:
+    """Build the messages list for the chat completions API."""
+    return [
+        {"role": "system", "content": SYSTEM_PROMPT},
+        {"role": "user",   "content": USER_TEMPLATE.format(
+            title=record.get("title", ""),
+            abstract=record.get("abstract", ""),
+        )},
+    ]
 
 
-def call_hf_api(prompt: str, max_retries: int = 3) -> Optional[str]:
+def call_hf_api(record: Dict, max_retries: int = 3) -> Optional[str]:
     """
-    Call the HuggingFace Inference API. Handles model loading delays
-    (HTTP 503) with exponential back-off.
+    Call the HuggingFace chat completions endpoint.
+    Handles model loading delays (HTTP 503) with exponential back-off.
     """
     payload = {
-        "inputs": prompt,
-        "parameters": {
-            "max_new_tokens": 400,
-            "temperature": 0.1,        # low temp = deterministic structured output
-            "return_full_text": False,
-        },
+        "model": HF_MODEL,
+        "messages": build_messages(record),
+        "max_tokens": 400,
+        "temperature": 0.1,   # low temp = deterministic structured output
     }
 
     for attempt in range(1, max_retries + 1):
@@ -98,21 +102,18 @@ def call_hf_api(prompt: str, max_retries: int = 3) -> Optional[str]:
             resp = requests.post(HF_API_URL, headers=HEADERS, json=payload, timeout=60)
 
             if resp.status_code == 503:
-                # Model is loading; wait and retry
                 wait = 20 * attempt
                 print(f"  [HF] Model loading, waiting {wait}s (attempt {attempt}/{max_retries})...")
                 time.sleep(wait)
                 continue
 
             resp.raise_for_status()
-            result = resp.json()
+            data = resp.json()
+            # Chat completions response: data["choices"][0]["message"]["content"]
+            return data["choices"][0]["message"]["content"]
 
-            if isinstance(result, list) and result:
-                return result[0].get("generated_text", "")
-            return None
-
-        except requests.RequestException as e:
-            print(f"  [HF] Request error on attempt {attempt}: {e}")
+        except (requests.RequestException, KeyError, IndexError) as e:
+            print(f"  [HF] Error on attempt {attempt}: {e}")
             if attempt < max_retries:
                 time.sleep(5 * attempt)
 
@@ -164,8 +165,7 @@ def extract_parameters_llm(record: Dict, fallback_only: bool = False) -> Dict:
             "pubmed_url": record.get("pubmed_url"), **params,
         }
 
-    prompt   = build_prompt(record)
-    raw_resp = call_hf_api(prompt)
+    raw_resp = call_hf_api(record)
     params   = parse_json_from_response(raw_resp)
 
     if params is None:
